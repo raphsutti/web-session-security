@@ -1,4 +1,5 @@
 // CSRF remediation using sameSite strict cookies
+// Visit attacker website with 127.0.0.1:PORT/attacker.html as that will be a different domain
 // transfer funds function - use with attacker.html
 const express = require('express')
 const cookieParser = require('cookie-parser')

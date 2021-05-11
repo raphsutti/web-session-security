@@ -25,7 +25,7 @@ const SESSIONS = {}
 
 app.get('/', (req, res) => {
   const username = SESSIONS[req.cookies.sessionId]
-  const source = htmlEscape(req.query.source)
+  const source = htmlEscape(req.query.source) // Sanitise user input
 
   if (username) {
     res.send(`

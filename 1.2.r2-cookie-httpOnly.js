@@ -37,7 +37,7 @@ app.post('/login', (req, res) => {
   if (req.body.password === password) {
     const sessionId = randomBytes(16).toString('base64')
 		res.cookie('sessionId', sessionId, {
-      httpOnly: true, // httpOnly
+      httpOnly: true, // httpOnly - no cookie via javascript
     });
 		SESSIONS[sessionId] = username
     res.redirect('/')

@@ -1,0 +1,175 @@
+export { default as theme } from "./src";
+import { Head, Image } from "mdx-deck";
+import {
+  Frontpage,
+  Lastpage,
+  Layout,
+  LayoutNoFooter,
+  Split,
+  BGImage,
+} from "./src";
+import { CodeSurfer } from "mdx-deck-code-surfer";
+import nightOwl from "prism-react-renderer/themes/nightOwl";
+
+<Head>
+  <title>Web security 101: Cookies, CSRF, CORS, and XSS</title>
+</Head>
+
+<BGImage src={require("file-loader!./images/sesamestreet2.jpg")} />
+
+<Frontpage>
+
+# Today's letter is C
+
+## Cookies, CSRF, CORS, and XSS
+
+### Web security 101
+
+</Frontpage>
+
+---
+
+export default Layout;
+
+# My name is Raph
+
+---
+
+export default Split;
+
+<img src={require("file-loader!./images/elmo.gif")} />
+
+- ~~Mechanical Engineer~~
+- ~~GRC Security~~
+- Developer
+- Really like learning
+
+---
+
+export default Layout;
+
+## Cookie
+
+## XSS
+
+## CSRF
+
+## CORS
+
+---
+
+export default Layout;
+
+## ~~Cookie~~
+
+## XSS
+
+## CSRF
+
+## CORS
+
+---
+
+export default Layout;
+
+## ~~Cookie~~
+
+## ~~XSS~~
+
+## CSRF
+
+## CORS
+
+---
+
+export default Layout;
+
+## ~~Cookie~~
+
+## ~~XSS~~
+
+## ~~CSRF~~
+
+## CORS
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  code={`
+import gql from 'graphql-tag'
+\n
+const Schema = gql\`
+  type Speaker {
+    id: ID!
+    name: String
+    photo: String
+    talks: [Talk]
+  }
+\n
+  type Talk {
+    name: String
+    speaker: Speaker
+  }
+\`
+`}
+/>
+
+```notes
+In this case we are creating a schema that has Speaker and Talk and a speaker can have multiple talks but a talk can only have one speaker and all their fields are typed
+```
+
+---
+
+export default Split;
+
+- Javascript
+- Typescript
+- Ruby
+- PHP
+- Python
+- Java
+- C/C++
+
+* Perl
+* .NET
+* Erlang
+* Elixir
+* Haskell
+* Rust
+* Lua
+
+---
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+class ProfileComponent implements OnInit {
+  loading: boolean;
+  currentUser: any;
+\n
+  private querySubscription: Subscription;
+\n
+  constructor(private apollo: Apollo) {}
+\n
+  ngOnInit() {
+    this.querySubscription = this.apollo.watchQuery<any>({ query: Query})
+    .valueChanges.subscribe(({ data, loading }) => {
+        this.loading = loading;
+        this.currentUser = data.currentUser;
+    });
+  }
+}
+`}
+/>
+
+---
+
+export default LayoutNoFooter;
+
+<Lastpage></Lastpage>
+
+# Thank You

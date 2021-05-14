@@ -37,12 +37,13 @@ export default Layout;
 
 export default Split;
 
-<img src={require("file-loader!./images/elmo.gif")} />
+<img src={require("file-loader!./images/codeclub.jpg")} />
 
 - ~~Mechanical Engineer~~
 - ~~GRC Security~~
 - Developer
 - Really like learning
+- Really like teaching
 
 ---
 
@@ -55,6 +56,124 @@ export default Layout;
 ## CSRF
 
 ## CORS
+
+---
+
+export default Layout;
+
+What is a cookie?
+
+---
+
+export default Layout;
+
+Back in the old days
+
+<img src={require("file-loader!./images/grandpa.gif")} />
+
+---
+
+export default Layout;
+
+Simpler times
+
+- No username/passwords
+- No need to keep track of who you are
+- No big risks of getting hacked
+
+---
+
+export default Layout;
+
+Now
+
+- Complex web applications
+- We need to keep track of logged on users
+- Hide all the secrets
+- Stop all the unauthorised users
+
+---
+
+<img src={require("file-loader!./images/buthow.jpg")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cookie1.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cookie2.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cookie3.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cookie4.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/momentslater.jpg")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cookie5.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cookie6.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods.png")} />
+
+http://localhost:2021/
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/oprahcookie.jpg")} />
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+ctx.cookies.set("sessionId", nextSessionId, {
+  httpOnly: false,
+  secure: false,
+  sameSite: "none",
+  path: "/",
+});
+`}
+/>
+
+```notes
+httpOnly - cookie accesible via javascript
+secure - HTTPS
+sameSite - cookie sending depending on sites
+```
 
 ---
 
@@ -94,35 +213,6 @@ export default Layout;
 
 ---
 
-export default LayoutNoFooter;
-
-<CodeSurfer
-  theme={nightOwl}
-  code={`
-import gql from 'graphql-tag'
-\n
-const Schema = gql\`
-  type Speaker {
-    id: ID!
-    name: String
-    photo: String
-    talks: [Talk]
-  }
-\n
-  type Talk {
-    name: String
-    speaker: Speaker
-  }
-\`
-`}
-/>
-
-```notes
-In this case we are creating a schema that has Speaker and Talk and a speaker can have multiple talks but a talk can only have one speaker and all their fields are typed
-```
-
----
-
 export default Split;
 
 - Javascript
@@ -140,31 +230,6 @@ export default Split;
 * Haskell
 * Rust
 * Lua
-
----
-
-<CodeSurfer
-  theme={nightOwl}
-  language="javascript"
-  code={`
-class ProfileComponent implements OnInit {
-  loading: boolean;
-  currentUser: any;
-\n
-  private querySubscription: Subscription;
-\n
-  constructor(private apollo: Apollo) {}
-\n
-  ngOnInit() {
-    this.querySubscription = this.apollo.watchQuery<any>({ query: Query})
-    .valueChanges.subscribe(({ data, loading }) => {
-        this.loading = loading;
-        this.currentUser = data.currentUser;
-    });
-  }
-}
-`}
-/>
 
 ---
 

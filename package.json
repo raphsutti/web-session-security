@@ -3,6 +3,7 @@
     "cookie-parser": "1.4.5",
     "csurf": "1.11.0",
     "express": "4.17.1",
+    "file-loader": "^2.0.0",
     "html-escape": "2.0.0",
     "koa": "2.13.1",
     "koa-body": "4.2.0",
@@ -13,13 +14,12 @@
     "koa-session": "6.2.0",
     "koa-views": "7.0.1",
     "koa2-cors": "2.0.6",
-    "node-dev": "7.0.0",
-    "ts-node": "9.1.1",
-    "typescript": "4.2.4",
-    "file-loader": "^2.0.0",
     "mdx-deck": "^1.7.0",
     "mdx-deck-code-surfer": "^0.5.5",
-    "raw-loader": "^1.0.0"
+    "node-dev": "7.0.0",
+    "raw-loader": "^1.0.0",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.4"
   },
   "scripts": {
     "build": "tsc --build",
@@ -32,6 +32,7 @@
     "@types/koa-cookie": "1.0.0",
     "@types/koa-router": "7.4.2",
     "@types/koa2-cors": "2.0.1",
+    "@types/koa-session": "5.10.3",
     "@types/node": "15.0.2",
     "ts-node-dev": "1.1.6"
   }

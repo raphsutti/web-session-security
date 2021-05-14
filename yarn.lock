@@ -1286,6 +1286,14 @@
   dependencies:
     "@types/koa" "*"
 
+"@types/koa-session@5.10.3":
+  version "5.10.3"
+  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-5.10.3.tgz#1a59edd138bcc098ca19c7fb21c5e38bcedcb8ad"
+  integrity sha512-68JIQ9enY8KVW1rSFYyepLAkRmR9KWPgS3Qstf+HHHu9TK5GRiwDBHY55eOgkhbVwsFqWszpQYX9feKDuBaQsw==
+  dependencies:
+    "@types/cookies" "*"
+    "@types/koa" "*"
+
 "@types/koa2-cors@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/koa2-cors/-/koa2-cors-2.0.1.tgz#76a635cadc9c10e9d29a209fa2db28529dfc765a"

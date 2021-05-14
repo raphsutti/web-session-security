@@ -11,7 +11,7 @@ app.use(bodyParser());
 app.use(cookie());
 
 const USERS: Record<string, string> = {
-  alice: "couch",
+  alice: "couch", // Plaintext passwords 🙈
   bob: "potato",
 };
 
@@ -61,7 +61,7 @@ router.post("/login", (ctx) => {
       path: "/",
     });
     SESSIONS[currentSessionId] = reqUsername;
-    currentSessionId++; // Sequential
+    currentSessionId++; // Sequential sessionId 🔥
     ctx.redirect("/");
   } else {
     ctx.body("Wrong username or password");

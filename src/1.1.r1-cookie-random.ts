@@ -28,7 +28,6 @@ router.get("/", (ctx) => {
   const username = SESSIONS[sessionId];
 
   if (!sessionId || !username) {
-    console.log(sessionId);
     return (ctx.body = `
     <h1>Login to your account</h1>
     <form method='POST' action="/login">

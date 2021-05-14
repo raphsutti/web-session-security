@@ -94,6 +94,14 @@ Now
 
 ---
 
+export default Layout;
+
+<img src={require("file-loader!./images/oprahcookie.jpg")} />
+
+---
+
+export default Layout;
+
 <img src={require("file-loader!./images/buthow.jpg")} />
 
 ---
@@ -144,13 +152,41 @@ export default Layout;
 
 <img src={require("file-loader!./images/demogods.png")} />
 
+Attack and defence: Bad cookie value
+
 http://localhost:2021/
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/oprahcookie.jpg")} />
+What is Cross Site Scripting (XSS)?
+
+---
+
+export default Layout;
+
+Web application uses untrusted user input without validation or encoding
+
+- eg. `<` can be encoded to `&lt;`
+
+- Without encoding, browser will go ahead and run `<script>` as scripts
+
+```notes
+Type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.
+XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script
+Flaws occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+XSS to exfil cookies
+
+http://localhost:2021/
 
 ---
 

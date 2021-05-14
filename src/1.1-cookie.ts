@@ -64,7 +64,7 @@ router.post("/login", (ctx) => {
     currentSessionId++; // Sequential sessionId 🔥
     ctx.redirect("/");
   } else {
-    ctx.body("Wrong username or password");
+    ctx.body = "Wrong username or password";
   }
 });
 

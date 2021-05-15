@@ -5,6 +5,7 @@
     "express": "4.17.1",
     "file-loader": "^2.0.0",
     "html-escape": "2.0.0",
+    "html-escaper": "3.0.3",
     "koa": "2.13.1",
     "koa-body": "4.2.0",
     "koa-bodyparser": "4.3.0",
@@ -27,12 +28,13 @@
     "start": "ts-node-dev"
   },
   "devDependencies": {
+    "@types/html-escaper": "3.0.0",
     "@types/koa": "2.13.1",
     "@types/koa-bodyparser": "4.3.0",
     "@types/koa-cookie": "1.0.0",
     "@types/koa-router": "7.4.2",
-    "@types/koa2-cors": "2.0.1",
     "@types/koa-session": "5.10.3",
+    "@types/koa2-cors": "2.0.1",
     "@types/node": "15.0.2",
     "ts-node-dev": "1.1.6"
   }

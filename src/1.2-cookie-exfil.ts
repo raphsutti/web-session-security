@@ -72,9 +72,9 @@ router.post("/login", (ctx) => {
   if (USERS[reqUsername] === reqPassword) {
     let nextSessionId = randomBytes(16).toString("hex"); // Random;
     ctx.cookies.set("sessionId", nextSessionId, {
-      httpOnly: false,
-      secure: false,
-      sameSite: "none",
+      httpOnly: false, // javascript can access to cookies 🔥
+      secure: false, // cookies sent with HTTP protocols 🔥
+      sameSite: "none", // cookies sent to other sites 🔥
       path: "/",
     });
     SESSIONS[nextSessionId] = reqUsername;

@@ -375,27 +375,78 @@ Causes user to execute unwanted actions where they are currently authenticated.
 
 export default Layout;
 
-Diagrams
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Our web app has a new fund transfer feature!
+
+http://localhost:2021/
 
 ---
 
-export default Split;
+export default Layout;
 
-- Javascript
-- Typescript
-- Ruby
-- PHP
-- Python
-- Java
-- C/C++
+How did that work?
 
-* Perl
-* .NET
-* Erlang
-* Elixir
-* Haskell
-* Rust
-* Lua
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/transfer1.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/transfer2.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Attack: CSRF - causing a fund transfer
+
+http://localhost:2021/
+
+http://localhost:3000/
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/csrf1.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/csrf2.png")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/surprisedpikachu3.jpg")} />
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="html"
+  code={`
+<form method='POST' action='http://localhost:2021/transfer' style='display: none'>
+  <input name='amount' value='50' />
+  <input name='to' value='bob' />
+  <input type='submit' value='Send' />
+</form>
+<script>
+  document.forms[0].submit()
+</script>
+`}
+/>
 
 ---
 
@@ -420,7 +471,7 @@ export default LayoutNoFooter;
   language="javascript"
   code={`
 ctx.cookies.set("sessionId", nextSessionId, {
-  httpOnly: true,
+  sameSite: "lax",
 });
 `}
 />
@@ -429,6 +480,20 @@ ctx.cookies.set("sessionId", nextSessionId, {
 httpOnly - cookie accesible via javascript
 secure - HTTPS
 sameSite - cookie sending depending on sites
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Defence: anti-CSRF token
+
+http://localhost:2021/
+
+```notes
+Cannot perform a transfer without a generated token on forms
 ```
 
 ---

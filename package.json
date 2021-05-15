@@ -23,7 +23,7 @@
     "typescript": "4.2.4"
   },
   "scripts": {
-    "build": "mdx-deck build slides/deck.mdx",
+    "build": "mdx-deck build --no-html slides/deck.mdx",
     "deck": "mdx-deck slides/deck.mdx --port 9876",
     "start": "ts-node-dev"
   },

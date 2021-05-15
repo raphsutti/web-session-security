@@ -3,10 +3,10 @@ import React from 'react'
 const Lastpage = () => (
   <div
     style={{
-      fontSize:300,
+      fontSize:150,
     }}
   >
-    🎉🔥
+    🛋 🥔 🎉
   </div>
 )
 

@@ -31,7 +31,7 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 export default Layout;
 
-# My name is Raph
+### My name is Raph
 
 ---
 
@@ -41,7 +41,7 @@ export default Split;
 
 - ~~Mechanical Engineer~~
 - ~~GRC Security~~
-- Developer
+- Developer @ SEEK
 - Really like learning
 - Really like teaching
 
@@ -49,13 +49,13 @@ export default Split;
 
 export default Layout;
 
-## Cookie
+### Cookie
 
-## XSS
+### XSS
 
-## CSRF
+### CSRF
 
-## CORS
+### CORS
 
 ---
 
@@ -70,6 +70,10 @@ export default Layout;
 Back in the old days
 
 <img src={require("file-loader!./images/grandpa.gif")} />
+
+```notes
+Before we can define cookies, we have to go back to old days
+```
 
 ---
 
@@ -132,6 +136,7 @@ export default Layout;
 ```notes
 Cookie is given so users dont need to log in every times
 Cookie is a key-value pair supplied in the HTTP header
+Cookie value format is up to the programmer
 ```
 
 ---
@@ -164,20 +169,27 @@ export default Layout;
 
 Attack: Bad cookie value
 
-Defence: Better cookie value
-
 http://localhost:2021/
-
-```notes
-Guessable session cookie
-R: random session cookie
-```
 
 ---
 
 export default Layout;
 
 <img src={require("file-loader!./images/surprisedpikachu1.jpg")} />
+
+```notes
+Dont worry pikachu we have fix
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods.png")} />
+
+Defence: Better cookie value
+
+http://localhost:2021/
 
 ---
 
@@ -247,6 +259,48 @@ XSS no longer work
 
 ---
 
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+router.get("/", (ctx) => {
+  const param = ctx.query.v // I trust you, user input 🔥
+  ...
+  ctx.body = \`<h3>
+    Oh cool, I can repeat your query param: \${param}. Harmless right?</h3>\`
+    })
+`}
+/>
+
+```notes
+current code
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+router.get("/", (ctx) => {
+  const param = escape(ctx.query.v) // sanitised ✨
+  ...
+  ctx.body = \`<h3>
+    Oh cool, I can repeat your query param: \${param}. Harmless right?</h3>\`
+    })
+`}
+/>
+
+```notes
+current code
+```
+
+---
+
 export default Layout;
 
 <img src={require("file-loader!./images/demogods2.png")} />
@@ -291,13 +345,37 @@ ctx.cookies.set("sessionId", nextSessionId, {
 
 ```notes
 httpOnly - cookie accesible via javascript
+
+Great, so which method should we use?
 ```
 
 ---
 
 export default Layout;
 
+<img src={require("file-loader!./images/whynotboth.gif")} />
+
+---
+
+export default Layout;
+
 What is Cross Site Request Forgery (CSRF)?
+
+---
+
+export default Layout;
+
+Causes user to execute unwanted actions where they are currently authenticated.
+
+- Eg. Transferring funds, changing their email address
+
+- If user is admin, CSRF can compromise the entire web
+
+---
+
+export default Layout;
+
+Diagrams
 
 ---
 

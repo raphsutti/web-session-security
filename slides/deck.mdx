@@ -285,15 +285,12 @@ export default LayoutNoFooter;
   code={`
 ctx.cookies.set("sessionId", nextSessionId, {
   httpOnly: true,
-  secure: true,
 });
 `}
 />
 
 ```notes
 httpOnly - cookie accesible via javascript
-secure - HTTPS
-sameSite - cookie sending depending on sites
 ```
 
 ---
@@ -334,6 +331,26 @@ http://localhost:2021/
 
 ```notes
 Cookie no longer accessible via another domain
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+ctx.cookies.set("sessionId", nextSessionId, {
+  httpOnly: true,
+});
+`}
+/>
+
+```notes
+httpOnly - cookie accesible via javascript
+secure - HTTPS
+sameSite - cookie sending depending on sites
 ```
 
 ---

@@ -27,7 +27,7 @@ const SESSIONS: Record<string, string> = {};
 router.get("/", (ctx) => {
   const sessionId = ctx.cookie?.sessionId;
   const username = SESSIONS[sessionId];
-  const param = ctx.query.v ? escape(ctx.query.v as string) : undefined; // sanitised
+  const param = ctx.query.v ? escape(ctx.query.v as string) : undefined; // sanitised ✨
 
   if (!sessionId || !username) {
     return (ctx.body = `

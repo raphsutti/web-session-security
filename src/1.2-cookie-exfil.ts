@@ -30,7 +30,7 @@ const SESSIONS: Record<string, string> = {};
 router.get("/", (ctx) => {
   const sessionId = ctx.cookie?.sessionId;
   const username = SESSIONS[sessionId];
-  const param = ctx.query.v;
+  const param = ctx.query.v; // I trust you, user input 🔥
 
   if (!sessionId || !username) {
     return (ctx.body = `

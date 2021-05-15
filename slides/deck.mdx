@@ -77,9 +77,10 @@ export default Layout;
 
 Simpler times
 
+- Simple static web pages
 - No username/passwords
 - No need to keep track of who you are
-- No big risks of getting hacked
+- No big impact of getting hacked
 
 ---
 
@@ -128,6 +129,11 @@ export default Layout;
 
 <img src={require("file-loader!./images/cookie4.png")} />
 
+```notes
+Cookie is given so users dont need to log in every times
+Cookie is a key-value pair supplied in the HTTP header
+```
+
 ---
 
 export default Layout;
@@ -139,6 +145,10 @@ export default Layout;
 export default Layout;
 
 <img src={require("file-loader!./images/cookie5.png")} />
+
+```notes
+Browser automatically supplies the cookie
+```
 
 ---
 
@@ -152,9 +162,22 @@ export default Layout;
 
 <img src={require("file-loader!./images/demogods.png")} />
 
-Attack and defence: Bad cookie value
+Attack: Bad cookie value
+
+Defence: Better cookie value
 
 http://localhost:2021/
+
+```notes
+Guessable session cookie
+R: random session cookie
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/surprisedpikachu1.jpg")} />
 
 ---
 
@@ -168,9 +191,9 @@ export default Layout;
 
 Web application uses untrusted user input without validation or encoding
 
-- eg. `<` can be encoded to `&lt;`
-
-- Without encoding, browser will go ahead and run `<script>` as scripts
+- `<` can be encoded to `&lt;`
+- Without encoding, browser run `<script>` as scripts
+- With encoding, browser _show_ `&lt;script&gt;`
 
 ```notes
 Type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.
@@ -184,9 +207,73 @@ export default Layout;
 
 <img src={require("file-loader!./images/demogods2.png")} />
 
-XSS to exfil cookies
+Attack: XSS to exfil cookies
 
 http://localhost:2021/
+
+```notes
+Get target to open malicious link
+Cookie stolen
+No need for password. Password complexity out the window
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/surprisedpikachu2.jpg")} />
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/lupin.gif")} />
+
+A few defense techniques
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Defence: Sanitise user input
+
+http://localhost:2021/
+
+```notes
+XSS no longer work
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Defence: Strong cookies - httpOnly
+
+http://localhost:2021/
+
+```notes
+Cookie no longer accessible via javascript
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+ctx.cookies.set("sessionId", nextSessionId);
+`}
+/>
+
+```notes
+current code
+```
 
 ---
 
@@ -197,10 +284,8 @@ export default LayoutNoFooter;
   language="javascript"
   code={`
 ctx.cookies.set("sessionId", nextSessionId, {
-  httpOnly: false,
-  secure: false,
-  sameSite: "none",
-  path: "/",
+  httpOnly: true,
+  secure: true,
 });
 `}
 />
@@ -215,37 +300,7 @@ sameSite - cookie sending depending on sites
 
 export default Layout;
 
-## ~~Cookie~~
-
-## XSS
-
-## CSRF
-
-## CORS
-
----
-
-export default Layout;
-
-## ~~Cookie~~
-
-## ~~XSS~~
-
-## CSRF
-
-## CORS
-
----
-
-export default Layout;
-
-## ~~Cookie~~
-
-## ~~XSS~~
-
-## ~~CSRF~~
-
-## CORS
+What is Cross Site Request Forgery (CSRF)?
 
 ---
 
@@ -266,6 +321,20 @@ export default Split;
 * Haskell
 * Rust
 * Lua
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Defence: Strong cookies - sameSite
+
+http://localhost:2021/
+
+```notes
+Cookie no longer accessible via another domain
+```
 
 ---
 

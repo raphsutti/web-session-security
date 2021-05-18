@@ -169,7 +169,7 @@ export default Layout;
 
 Attack: Bad cookie value
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ---
 
@@ -189,7 +189,7 @@ export default Layout;
 
 Defence: Better cookie value
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ---
 
@@ -221,7 +221,7 @@ export default Layout;
 
 Attack: XSS to exfil cookies
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ```notes
 Get target to open malicious link
@@ -251,7 +251,7 @@ export default Layout;
 
 Defence: Sanitise user input
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ```notes
 XSS no longer work
@@ -307,7 +307,7 @@ export default Layout;
 
 Defence: Strong cookies - httpOnly
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ```notes
 Cookie no longer accessible via javascript
@@ -379,7 +379,7 @@ export default Layout;
 
 Our web app has a new fund transfer feature!
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ---
 
@@ -407,9 +407,9 @@ export default Layout;
 
 Attack: CSRF - causing a fund transfer
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
-http://localhost:3000/
+http://127.0.0.1:9000/malicious.html
 
 ---
 
@@ -437,7 +437,8 @@ export default LayoutNoFooter;
   theme={nightOwl}
   language="html"
   code={`
-<form method='POST' action='http://localhost:2021/transfer' style='display: none'>
+<form method='POST' action='http://vuln.hacker.com:2021/transfer' 
+  style='display: none'>
   <input name='amount' value='50' />
   <input name='to' value='bob' />
   <input type='submit' value='Send' />
@@ -456,7 +457,7 @@ export default Layout;
 
 Defence: Strong cookies - sameSite
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ```notes
 Cookie no longer accessible via another domain
@@ -490,11 +491,17 @@ export default Layout;
 
 Defence: anti-CSRF token
 
-http://localhost:2021/
+http://vuln.hacker.com:2021/
 
 ```notes
 Cannot perform a transfer without a generated token on forms
 ```
+
+---
+
+export default Layout;
+
+What is Cross-Origin Resource Sharing (CORS)
 
 ---
 

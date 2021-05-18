@@ -1,6 +1,8 @@
 // CSRF on strong cookie
 
-// Run with malicious csrf-demo https://github.com/raphsutti/csrf-demo
+// Run with malicious site in /attacker
+// Open 127.0.0.1:9000/malicious.html
+
 import Koa from "koa";
 import Router from "koa-router";
 import bodyParser from "koa-bodyparser";

@@ -1,4 +1,4 @@
-// CSRF on strong cookie
+// CSRF on unguessable cookie
 
 // Run with malicious site in /attacker
 // Open 127.0.0.1:9000/malicious.html

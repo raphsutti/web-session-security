@@ -27,11 +27,10 @@ const FUNDS: Record<string, number> = {
 
 const SESSIONS: Record<string, string> = {};
 
-let token = randomBytes(16).toString("hex");
-
 router.get("/", (ctx) => {
   const sessionId = ctx.cookie?.sessionId;
   const username = SESSIONS[sessionId];
+  const token = randomBytes(16).toString("hex");
 
   if (!sessionId || !username) {
     return (ctx.body = `

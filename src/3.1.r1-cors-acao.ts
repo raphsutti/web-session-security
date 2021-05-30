@@ -23,7 +23,7 @@ app.use(
       if (ctx.url === "/test") {
         return false;
       }
-      return ctx.request.header.origin ?? false; // reflecting whatever origin header is supplied 🔥
+      return "*"; // return * ✨
     },
     exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
     maxAge: 5,

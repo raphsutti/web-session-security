@@ -49,13 +49,13 @@ export default Split;
 
 export default Layout;
 
-### Cookie
+Cookie
 
-### XSS
+XSS
 
-### CSRF
+CSRF
 
-### CORS
+CORS
 
 ---
 
@@ -103,7 +103,7 @@ Simpler times
 
 - Simple static web pages
 - No username/passwords
-- No need to keep track of who you are
+- No need to keep track of who you are / states
 - No big impact of getting hacked
 
 ```notes
@@ -621,45 +621,102 @@ What is Cross-Origin Resource Sharing (CORS)
 
 export default Layout;
 
+<img src={require("file-loader!./images/cors-error.png")} />
+
 - Relaxation of the same origin policy
+- Cross origin requests normally blocked by browser
 - Allow any other origins (domain, scheme, or port) to load resources
-- Doesn't protect from CSRF but could actually introduce vulns
+- Doesn't protect from CSRF
+
+```notes
+The request blocked by the browser
+Setting up CORS will let browsers get passed this error
+```
 
 ---
 
 export default Layout;
 
-ACAO header
+How does it work? - HTTP Headers
 
-Credentials true header
-
----
-
-export default Layout;
-
-What happens with misconfigured CORS?
-
-- Auto reflecting ACAO header
-- origin: null
+- Access-Control-Allow-Origin
+- Access-Control-Allow-Credentials
 
 ---
 
 export default Layout;
 
-- Obtain sensitive info eg API keys displayed after logging in
+<img src={require("file-loader!./images/cors1.png")} />
+
+```notes
+Access malicious site that redirects to fetch sensitive data
+```
 
 ---
 
 export default Layout;
 
-- ACAO: "\*"
-- credentials: true
+<img src={require("file-loader!./images/cors2.png")} />
+
+```notes
+Browser adds Origin header as it is a cross origin request
+```
 
 ---
 
 export default Layout;
 
-Confusing origin: null
+<img src={require("file-loader!./images/cors3.png")} />
+
+```notes
+Server adds the ACAO and ACAC headers if origin is allowed
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors4.png")} />
+
+```notes
+Browser forwards the request
+(Would block if no ACAO header)
+(Would not send cookies if no ACAD header)
+```
+
+---
+
+export default Layout;
+
+Misconfigured CORS example
+
+- Reflecting any Origins and respond in ACAO header
+- Attacker could obtain sensitive info eg API keys
+
+```notes
+But why do server just reflect any origin back?
+ACAO headers do not allow for a list, it is all or one or nothing
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Attack: CORS reflecting any request origin header
+
+http://vuln.hacker.com:2021/
+
+http://127.0.0.1:9000/malicious-cors.html
+
+```notes
+3.1-cors.ts
+
+The site currently only shows the balance of the logged in user
+The site could should API keys
+The server reflect origin as ACAO and forwards the page content
+```
 
 ---
 
@@ -667,11 +724,73 @@ export default Layout;
 
 <img src={require("file-loader!./images/surprisedpikachu4.jpg")} />
 
+```notes
+Dont worry pikachu this isnt too bad
+```
+
 ---
 
 export default Layout;
 
-# Goodies
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Defence: CORS only reflect ACAO on trusted sites
+
+http://vuln.hacker.com:2021/
+
+http://127.0.0.1:9000/malicious-cors.html
+
+```notes
+3.1.r1-cors-acao.ts
+
+Show blocked by CORS error in browser
+```
+
+---
+
+export default Layout;
+
+Confusing Origin: null
+
+```notes
+Another confusing aspect of CORS is the null origin
+When browser must send Origin header, it would be set to null
+eg. iframe
+```
+
+---
+
+export default Layout;
+
+Defence against CORS misconfigurations
+
+- Only allow trusted sites
+  - Dynamically reflecting origins should be validated
+- Avoid allowing ACAO: null
+
+```notes
+
+```
+
+---
+
+export default Layout;
+
+## Summary
+
+HTTP Cookie
+
+Cross Site Scripting (XSS)
+
+Cross Site Request Forgery (CSRF)
+
+Cross-Origin Resource Sharing (CORS)
+
+---
+
+export default Layout;
+
+## Goodies
 
 #### CS253: https://web.stanford.edu/class/cs253/
 

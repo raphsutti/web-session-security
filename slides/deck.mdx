@@ -67,12 +67,32 @@ What is a cookie?
 
 export default Layout;
 
+Have you ever wonder?
+
+<img src={require("file-loader!./images/elmothink.gif")} />
+
+```notes
+While doing online shopping,
+you add things to cart,
+you go get a coffee and come back and the application remembers you?
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/buthow.jpg")} />
+
+---
+
+export default Layout;
+
 Back in the old days
 
 <img src={require("file-loader!./images/grandpa.gif")} />
 
 ```notes
-Before we can define cookies, we have to go back to old days
+Things were much simpler
 ```
 
 ---
@@ -85,6 +105,10 @@ Simpler times
 - No username/passwords
 - No need to keep track of who you are
 - No big impact of getting hacked
+
+```notes
+Risk of website defacement
+```
 
 ---
 
@@ -103,11 +127,9 @@ export default Layout;
 
 <img src={require("file-loader!./images/oprahcookie.jpg")} />
 
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/buthow.jpg")} />
+```notes
+We keep track of sessions with cookies!
+```
 
 ---
 
@@ -171,6 +193,10 @@ Attack: Bad cookie value
 
 http://vuln.hacker.com:2021/
 
+```notes
+1.1-cookie.ts
+```
+
 ---
 
 export default Layout;
@@ -191,6 +217,10 @@ Defence: Better cookie value
 
 http://vuln.hacker.com:2021/
 
+```notes
+1.1.r1-cookie-random.ts
+```
+
 ---
 
 export default Layout;
@@ -208,8 +238,9 @@ Web application uses untrusted user input without validation or encoding
 - With encoding, browser _show_ `&lt;script&gt;`
 
 ```notes
-Type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.
-XSS attacks occur when an attacker uses a web application to send malicious code, generally in the form of a browser side script
+Type of injection, where malicious scripts are injected into trusted websites.
+XSS attacks occur when an attacker uses a web application to send malicious code,
+generally in the form of a browser side script
 Flaws occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
 ```
 
@@ -224,6 +255,8 @@ Attack: XSS to exfil cookies
 http://vuln.hacker.com:2021/
 
 ```notes
+1.2-cookie-exfil.ts
+
 Get target to open malicious link
 Cookie stolen
 No need for password. Password complexity out the window
@@ -254,6 +287,8 @@ Defence: Sanitise user input
 http://vuln.hacker.com:2021/
 
 ```notes
+1.2.r1-xss-sanitise.ts
+
 XSS no longer work
 ```
 
@@ -296,7 +331,7 @@ router.get("/", (ctx) => {
 />
 
 ```notes
-current code
+Sanitised code
 ```
 
 ---
@@ -310,6 +345,8 @@ Defence: Strong cookies - httpOnly
 http://vuln.hacker.com:2021/
 
 ```notes
+1.2.r2-cookie-httpOnly.ts
+
 Cookie no longer accessible via javascript
 ```
 
@@ -347,6 +384,8 @@ ctx.cookies.set("sessionId", nextSessionId, {
 httpOnly - cookie accesible via javascript
 
 Great, so which method should we use?
+
+Input sanitisation or httpOnly cookie header?
 ```
 
 ---
@@ -354,6 +393,36 @@ Great, so which method should we use?
 export default Layout;
 
 <img src={require("file-loader!./images/whynotboth.gif")} />
+
+---
+
+export default Layout;
+
+There are other great cookie headers too!
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+ctx.cookies.set("sessionId", nextSessionId, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "lax",
+  path: "/",
+});
+`}
+/>
+
+```notes
+httpOnly - cookie accesible via javascript
+secure - HTTPS
+sameSite - TODO cookies sent over same site (strict or lax)
+path - TODO
+```
 
 ---
 
@@ -369,7 +438,7 @@ Causes user to execute unwanted actions where they are currently authenticated.
 
 - Eg. Transferring funds, changing their email address
 
-- If user is admin, CSRF can compromise the entire web
+- If user is admin, CSRF can compromise the entire application
 
 ---
 
@@ -381,11 +450,15 @@ Our web app has a new fund transfer feature!
 
 http://vuln.hacker.com:2021/
 
+```notes
+2.1-csrf.ts
+```
+
 ---
 
 export default Layout;
 
-How did that work?
+How does that work?
 
 ---
 
@@ -393,11 +466,19 @@ export default Layout;
 
 <img src={require("file-loader!./images/transfer1.png")} />
 
+```notes
+Again, browser automatically submits cookie
+```
+
 ---
 
 export default Layout;
 
 <img src={require("file-loader!./images/transfer2.png")} />
+
+```notes
+Browser then validates and perform transfer action
+```
 
 ---
 
@@ -411,17 +492,9 @@ http://vuln.hacker.com:2021/
 
 http://127.0.0.1:9000/malicious.html
 
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/csrf1.png")} />
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/csrf2.png")} />
+```notes
+2.1-csrf.ts
+```
 
 ---
 
@@ -431,13 +504,39 @@ export default Layout;
 
 ---
 
+export default Layout;
+
+Wait what happened?
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/csrf1.png")} />
+
+```notes
+This time we have an attacker on the left asking you to visit their site with your browser
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/csrf2.png")} />
+
+```notes
+You visit the site and was redirected to do a POST to the app and transfer funds to bob
+```
+
+---
+
 export default LayoutNoFooter;
 
 <CodeSurfer
   theme={nightOwl}
   language="html"
   code={`
-<form method='POST' action='http://vuln.hacker.com:2021/transfer' 
+<form method='POST' action='http://vuln.hacker.com:2021/transfer'
   style='display: none'>
   <input name='amount' value='50' />
   <input name='to' value='bob' />
@@ -448,6 +547,17 @@ export default LayoutNoFooter;
 </script>
 `}
 />
+
+```notes
+This code is embedded in the attackers iframe site
+Note display: none and forms[0].submit() (auto submit)
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/defence.gif")} />
 
 ---
 
@@ -460,6 +570,8 @@ Defence: Strong cookies - sameSite
 http://vuln.hacker.com:2021/
 
 ```notes
+2.1.r1-csrf-samesite-cookie.ts
+
 Cookie no longer accessible via another domain
 ```
 
@@ -494,6 +606,8 @@ Defence: anti-CSRF token
 http://vuln.hacker.com:2021/
 
 ```notes
+2.1.r2-csrf-token.ts
+
 Cannot perform a transfer without a generated token on forms
 ```
 
@@ -502,6 +616,39 @@ Cannot perform a transfer without a generated token on forms
 export default Layout;
 
 What is Cross-Origin Resource Sharing (CORS)
+
+---
+
+export default Layout;
+
+- Relaxation of the same origin policy
+- Allow any other origins (domain, scheme, or port) to load resources
+- Doesn't protect from CSRF but could actually introduce vulns
+
+---
+
+export default Layout;
+
+ACAO header
+Credentials true header
+
+---
+
+export default Layout;
+
+What happens with misconfigured CORS?
+
+---
+
+export default Layout;
+
+- Obtain sensitive info eg API keys displayed after logging in
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/surprisedpikachu4.jpg")} />
 
 ---
 

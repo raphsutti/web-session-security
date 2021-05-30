@@ -19,11 +19,18 @@ app.use(bodyParser());
 app.use(cookie());
 app.use(
   cors({
-    origin: function (ctx) {
-      if (ctx.url === "/test") {
+    origin: (ctx) => {
+      const suppliedOrigin = ctx.request.header.origin;
+      const trustedSites = ["https://shipit.com", "https://trustedsite.com"];
+
+      if (!suppliedOrigin) {
         return false;
       }
-      return "*"; // return * ✨
+
+      if (trustedSites.includes(suppliedOrigin)) {
+        return suppliedOrigin; // Only allow trusted sites✨
+      }
+      return false;
     },
     exposeHeaders: ["WWW-Authenticate", "Server-Authorization"],
     maxAge: 5,

@@ -53,7 +53,7 @@ router.post("/login", (ctx) => {
   const { username: reqUsername, password: reqPassword } = body;
 
   if (USERS[reqUsername] === reqPassword) {
-    let nextSessionId = randomBytes(16).toString("hex"); // Random;
+    let nextSessionId = randomBytes(16).toString("hex"); // Random ✨;
     ctx.cookies.set("sessionId", nextSessionId, {
       httpOnly: false,
       secure: false,

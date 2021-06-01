@@ -31,7 +31,7 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 export default Layout;
 
-### My name is Raph
+My name is Raph
 
 ---
 
@@ -121,6 +121,10 @@ Now
 - Hide all the secrets
 - Stop all the unauthorised users
 
+```notes
+So how do we keep track of users?
+```
+
 ---
 
 export default Layout;
@@ -136,6 +140,10 @@ We keep track of sessions with cookies!
 export default Layout;
 
 <img src={require("file-loader!./images/cookie1.png")} />
+
+```notes
+Browser on the left and server on the right
+```
 
 ---
 
@@ -235,7 +243,7 @@ Web application uses untrusted user input without validation or encoding
 
 - `<` can be encoded to `&lt;`
 - Without encoding, browser run `<script>` as scripts
-- With encoding, browser _show_ `&lt;script&gt;`
+- With encoding, browser sees `&lt;script&gt;` and shows the characters
 
 ```notes
 Type of injection, where malicious scripts are injected into trusted websites.
@@ -412,16 +420,14 @@ ctx.cookies.set("sessionId", nextSessionId, {
   httpOnly: true,
   secure: true,
   sameSite: "lax",
-  path: "/",
 });
 `}
 />
 
 ```notes
 httpOnly - cookie accesible via javascript
-secure - HTTPS
-sameSite - TODO cookies sent over same site (strict or lax)
-path - TODO
+secure - Sent only over the HTTPS protocol
+sameSite - Whether/when cookies are sent with cross-site requests
 ```
 
 ---
@@ -477,7 +483,7 @@ export default Layout;
 <img src={require("file-loader!./images/transfer2.png")} />
 
 ```notes
-Browser then validates and perform transfer action
+Browser then validates cookie and perform transfer action
 ```
 
 ---
@@ -526,6 +532,7 @@ export default Layout;
 
 ```notes
 You visit the site and was redirected to do a POST to the app and transfer funds to bob
+The cookie was automatically submitted by the browser!
 ```
 
 ---

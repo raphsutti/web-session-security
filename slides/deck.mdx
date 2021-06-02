@@ -2,6 +2,7 @@ export { default as theme } from "./src";
 import { Head, Image } from "mdx-deck";
 import {
   Frontpage,
+  LargeEmoji,
   Lastpage,
   Layout,
   LayoutNoFooter,
@@ -239,17 +240,16 @@ What is Cross Site Scripting (XSS)?
 
 export default Layout;
 
-Web application uses untrusted user input without validation or encoding
+Web application uses user input without validation or encoding
 
 - `<` can be encoded to `&lt;`
 - Without encoding, browser run `<script>` as scripts
-- With encoding, browser sees `&lt;script&gt;` and shows the characters
+- With encoding, browser sees `&lt;script&gt;`
 
 ```notes
-Type of injection, where malicious scripts are injected into trusted websites.
-XSS attacks occur when an attacker uses a web application to send malicious code,
-generally in the form of a browser side script
-Flaws occur anywhere a web application uses input from a user within the output it generates without validating or encoding it.
+Type of injection,
+Malicious browser side scripts are injected into trusted websites.
+Flaws occur anywhere a web application uses input from a user without validating or encoding it.
 ```
 
 ---
@@ -298,6 +298,7 @@ http://vuln.hacker.com:2021/
 1.2.r1-xss-sanitise.ts
 
 XSS no longer work
+View source will show &lt; encoding
 ```
 
 ---
@@ -366,12 +367,16 @@ export default LayoutNoFooter;
   theme={nightOwl}
   language="javascript"
   code={`
-ctx.cookies.set("sessionId", nextSessionId);
+ctx.cookies.set("sessionId", nextSessionId, {
+  httpOnly: false,
+});
 `}
 />
 
 ```notes
 current code
+You might think, httpOnly means cookie will be sent over HTTP protocol only
+rather than HTTPS?
 ```
 
 ---
@@ -440,9 +445,9 @@ What is Cross Site Request Forgery (CSRF)?
 
 export default Layout;
 
-Causes user to execute unwanted actions where they are currently authenticated.
+Cause user to execute unwanted actions while they are currently authenticated
 
-- Eg. Transferring funds, changing their email address
+- Eg. Transferring funds, changing email address
 
 - If user is admin, CSRF can compromise the entire application
 
@@ -450,21 +455,7 @@ Causes user to execute unwanted actions where they are currently authenticated.
 
 export default Layout;
 
-<img src={require("file-loader!./images/demogods2.png")} />
-
 Our web app has a new fund transfer feature!
-
-http://vuln.hacker.com:2021/
-
-```notes
-2.1-csrf.ts
-```
-
----
-
-export default Layout;
-
-How does that work?
 
 ---
 
@@ -473,7 +464,8 @@ export default Layout;
 <img src={require("file-loader!./images/transfer1.png")} />
 
 ```notes
-Again, browser automatically submits cookie
+After logging in and receiving a cookie from the server
+Browser automatically submits cookie with transfer POST
 ```
 
 ---
@@ -492,7 +484,7 @@ export default Layout;
 
 <img src={require("file-loader!./images/demogods2.png")} />
 
-Attack: CSRF - causing a fund transfer
+Attack: CSRF - unintended a fund transfer
 
 http://vuln.hacker.com:2021/
 
@@ -500,6 +492,8 @@ http://127.0.0.1:9000/malicious.html
 
 ```notes
 2.1-csrf.ts
+
+Visiting malicious page cause uninteded fund transfer to bob
 ```
 
 ---
@@ -632,12 +626,14 @@ export default Layout;
 
 - Relaxation of the same origin policy
 - Cross origin requests normally blocked by browser
-- Allow any other origins (domain, scheme, or port) to load resources
-- Doesn't protect from CSRF
+- CORS allow other origins to load resources
+- Could introduce CSRF vulns
 
 ```notes
 The request blocked by the browser
 Setting up CORS will let browsers get passed this error
+
+origin: (domain, scheme, or port)
 ```
 
 ---
@@ -690,6 +686,39 @@ Browser forwards the request
 (Would block if no ACAO header)
 (Would not send cookies if no ACAD header)
 ```
+
+---
+
+export default Layout;
+
+Unfortunately..
+
+- Access-Control-Allow-Origin: http://example.com
+- Access-Control-Allow-Origin: \*
+- Access-Control-Allow-Origin: null
+
+```notes
+ACAO headers do not allow list, it is all or one or nothing
+```
+
+---
+
+export default Layout;
+
+I also want credentials (cookies) sent
+
+- Access-Control-Allow-Origin: \*
+- Access-Control-Allow-Credentials: true
+
+```notes
+ACAO headers do not allow list, it is all or one or nothing
+```
+
+---
+
+export default LargeEmoji;
+
+❌
 
 ---
 
@@ -793,6 +822,13 @@ Cross Site Request Forgery (CSRF)
 
 Cross-Origin Resource Sharing (CORS)
 
+```notes
+Good cookies headers like httpOnly, secure, and sameSite
+XSS is scary, sanitise/validate your input
+CSRF is performs action on behalf of users using cookies
+CORS misconfiguration can lead to CSRF
+```
+
 ---
 
 export default Layout;
@@ -804,6 +840,8 @@ export default Layout;
 #### PortSwigger Web Security Academy: https://portswigger.net/web-security
 
 #### Exploiting CORS Misconfigurations - James Kettle: https://youtu.be/wgkj4ZgxI4c
+
+#### https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 
 ```notes
 We are just scratching the surface!

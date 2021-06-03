@@ -28,6 +28,10 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 </Frontpage>
 
+```notes
+X in XSS stands for Cross
+```
+
 ---
 
 export default Layout;
@@ -64,6 +68,10 @@ export default Layout;
 
 What is a cookie?
 
+```notes
+No I'm talking about HTTP cookies
+```
+
 ---
 
 export default Layout;
@@ -75,7 +83,7 @@ Have you ever wonder?
 ```notes
 While doing online shopping,
 you add things to cart,
-you go get a coffee and come back and the application remembers you?
+you go get a coffee and come back and the application remembers you and the content of your cart?
 ```
 
 ---
@@ -83,6 +91,10 @@ you go get a coffee and come back and the application remembers you?
 export default Layout;
 
 <img src={require("file-loader!./images/buthow.jpg")} />
+
+```notes
+Well lets go back to history
+```
 
 ---
 
@@ -134,6 +146,8 @@ export default Layout;
 
 ```notes
 We keep track of sessions with cookies!
+
+So lets talk about how this works
 ```
 
 ---
@@ -152,6 +166,11 @@ export default Layout;
 
 <img src={require("file-loader!./images/cookie2.jpg")} />
 
+```notes
+Since the server has no knowledge of who you are,
+you get a login page
+```
+
 ---
 
 export default Layout;
@@ -165,7 +184,10 @@ export default Layout;
 <img src={require("file-loader!./images/cookie4.jpg")} />
 
 ```notes
-Cookie is given so users dont need to log in every times
+Server validates password then gives a cookie
+
+Cookie is given so users dont need to log in every time
+
 Cookie is a key-value pair supplied in the HTTP header
 Cookie value format is up to the programmer
 ```
@@ -176,6 +198,10 @@ export default Layout;
 
 <img src={require("file-loader!./images/momentslater.jpg")} />
 
+```notes
+What if you go get a coffee now
+```
+
 ---
 
 export default Layout;
@@ -183,6 +209,7 @@ export default Layout;
 <img src={require("file-loader!./images/cookie5.jpg")} />
 
 ```notes
+You come back and send a request to /
 Browser automatically supplies the cookie
 ```
 
@@ -191,6 +218,10 @@ Browser automatically supplies the cookie
 export default Layout;
 
 <img src={require("file-loader!./images/cookie6.jpg")} />
+
+```notes
+Browser supplies your account details
+```
 
 ---
 
@@ -203,6 +234,8 @@ Attack: Bad cookie value
 http://vuln.hacker.com:2021/
 
 ```notes
+So lets see this in action and a bad implementation of cookie value
+
 1.1-cookie.ts
 ```
 
@@ -227,6 +260,8 @@ Defence: Better cookie value
 http://vuln.hacker.com:2021/
 
 ```notes
+Lets see the fix
+
 1.1.r1-cookie-random.ts
 ```
 
@@ -263,10 +298,10 @@ Attack: XSS to exfil cookies
 http://vuln.hacker.com:2021/
 
 ```notes
+Lets see how we can use XSS to steal some cookies
+
 1.2-cookie-exfil.ts
 
-Get target to open malicious link
-Cookie stolen
 No need for password. Password complexity out the window
 ```
 
@@ -527,7 +562,7 @@ export default Layout;
 <img src={require("file-loader!./images/csrf1.jpg")} />
 
 ```notes
-This time we have an attacker on the left asking you to visit their site with your browser
+This time we have an attacker's server on the left asking you to visit their site with your browser
 ```
 
 ---
@@ -789,7 +824,7 @@ Fortunately..
 ```notes
 As someone who just wants to get this working
 
-You might want to allow multiple origins and send cookies throught
+You might want to allow multiple origins and send cookies through
 
 Fortunately, this will result in an error
 ```
@@ -828,6 +863,8 @@ app.use(
 
 ```notes
 Our server here is going to add ACAO headers based on what Origin header was supplied
+
+This is bad
 ```
 
 ---
@@ -876,6 +913,34 @@ http://127.0.0.1:9000/malicious-cors.html
 3.1.r1-cors-acao.ts
 
 Show blocked by CORS error in browser
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+app.use(
+  cors({
+    origin: (ctx) => {
+      const suppliedOrigin = ctx.request.header.origin;
+      const trustedSites = ["https://shipit.com", "https://trustedsite.com"];
+      if (trustedSites.includes(suppliedOrigin)) {
+        return suppliedOrigin; // Only allow trusted sites✨
+      }
+      return false;
+    },
+    credentials: true,
+  })
+);
+`}
+/>
+
+```notes
+Our server only returns ACAO for trusted origins
 ```
 
 ---

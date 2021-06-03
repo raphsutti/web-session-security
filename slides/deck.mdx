@@ -140,7 +140,7 @@ We keep track of sessions with cookies!
 
 export default Layout;
 
-<img src={require("file-loader!./images/cookie1.png")} />
+<img src={require("file-loader!./images/cookie1.jpg")} />
 
 ```notes
 Browser on the left and server on the right
@@ -150,19 +150,19 @@ Browser on the left and server on the right
 
 export default Layout;
 
-<img src={require("file-loader!./images/cookie2.png")} />
+<img src={require("file-loader!./images/cookie2.jpg")} />
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/cookie3.png")} />
+<img src={require("file-loader!./images/cookie3.jpg")} />
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/cookie4.png")} />
+<img src={require("file-loader!./images/cookie4.jpg")} />
 
 ```notes
 Cookie is given so users dont need to log in every times
@@ -180,7 +180,7 @@ export default Layout;
 
 export default Layout;
 
-<img src={require("file-loader!./images/cookie5.png")} />
+<img src={require("file-loader!./images/cookie5.jpg")} />
 
 ```notes
 Browser automatically supplies the cookie
@@ -190,7 +190,7 @@ Browser automatically supplies the cookie
 
 export default Layout;
 
-<img src={require("file-loader!./images/cookie6.png")} />
+<img src={require("file-loader!./images/cookie6.jpg")} />
 
 ---
 
@@ -433,6 +433,8 @@ ctx.cookies.set("sessionId", nextSessionId, {
 httpOnly - cookie accesible via javascript
 secure - Sent only over the HTTPS protocol
 sameSite - Whether/when cookies are sent with cross-site requests
+
+What does sameSite mean?
 ```
 
 ---
@@ -455,27 +457,35 @@ Cause user to execute unwanted actions while they are currently authenticated
 
 export default Layout;
 
+<img src={require("file-loader!./images/goodnews.gif")} />
+
 Our web app has a new fund transfer feature!
 
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/transfer1.png")} />
-
 ```notes
-After logging in and receiving a cookie from the server
-Browser automatically submits cookie with transfer POST
+Lets have a look at how this works
 ```
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/transfer2.png")} />
+<img src={require("file-loader!./images/transfer1.jpg")} />
 
 ```notes
-Browser then validates cookie and perform transfer action
+After logging in and receiving a cookie from the server
+Browser automatically submits cookie with transfer POST
+
+This time, we request a fund transfer
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/transfer2.jpg")} />
+
+```notes
+Server then validates cookie and perform transfer action
 ```
 
 ---
@@ -506,13 +516,15 @@ export default Layout;
 
 export default Layout;
 
+<img src={require("file-loader!./images/confused.gif")} />
+
 Wait what happened?
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/csrf1.png")} />
+<img src={require("file-loader!./images/csrf1.jpg")} />
 
 ```notes
 This time we have an attacker on the left asking you to visit their site with your browser
@@ -522,11 +534,14 @@ This time we have an attacker on the left asking you to visit their site with yo
 
 export default Layout;
 
-<img src={require("file-loader!./images/csrf2.png")} />
+<img src={require("file-loader!./images/csrf2.jpg")} />
 
 ```notes
 You visit the site and was redirected to do a POST to the app and transfer funds to bob
+
 The cookie was automatically submitted by the browser!
+
+The attacker doesnt need to know your password or steal your cookies
 ```
 
 ---
@@ -560,6 +575,10 @@ export default Layout;
 
 <img src={require("file-loader!./images/defence.gif")} />
 
+```notes
+Time for some defence
+```
+
 ---
 
 export default Layout;
@@ -585,6 +604,8 @@ export default LayoutNoFooter;
   language="javascript"
   code={`
 ctx.cookies.set("sessionId", nextSessionId, {
+  httpOnly: true,
+  secure: true,
   sameSite: "lax",
 });
 `}
@@ -614,6 +635,47 @@ Cannot perform a transfer without a generated token on forms
 
 ---
 
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="html"
+  code={`
+<form method='POST' action='/transfer'>
+  Send amount:
+  <input name='amount' />
+  To user:
+  <input name='to' />
+  <input type='submit' value='Send' />
+  <input type="hidden" name="anti" value=\${token} />
+</form>
+`}
+/>
+
+```notes
+We add a hidden form field for a token to be submitted with this specific form loaded
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+if (token !== ctx.request.body.anti) {
+    return (ctx.body = "Invalid cookie");
+}
+`}
+/>
+
+```notes
+And we do a check if token matches what was given
+```
+
+---
+
 export default Layout;
 
 What is Cross-Origin Resource Sharing (CORS)
@@ -624,13 +686,15 @@ export default Layout;
 
 <img src={require("file-loader!./images/cors-error.png")} />
 
-- Relaxation of the same origin policy
 - Cross origin requests normally blocked by browser
-- CORS allow other origins to load resources
+- CORS = Relaxation of the same origin policy
 - Could introduce CSRF vulns
 
 ```notes
-The request blocked by the browser
+Those who worked with frontend server talking to backend server would run into this
+
+The request normally blocked by the browser
+
 Setting up CORS will let browsers get passed this error
 
 origin: (domain, scheme, or port)
@@ -645,21 +709,28 @@ How does it work? - HTTP Headers
 - Access-Control-Allow-Origin
 - Access-Control-Allow-Credentials
 
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/cors1.png")} />
-
 ```notes
-Access malicious site that redirects to fetch sensitive data
+Important HTTP headers
+
+ACAO
+ACAC
 ```
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/cors2.png")} />
+<img src={require("file-loader!./images/cors1.jpg")} />
+
+```notes
+Access malicious site that redirects to fetch sensitive data that is in the server on the right
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors2.jpg")} />
 
 ```notes
 Browser adds Origin header as it is a cross origin request
@@ -669,17 +740,18 @@ Browser adds Origin header as it is a cross origin request
 
 export default Layout;
 
-<img src={require("file-loader!./images/cors3.png")} />
+<img src={require("file-loader!./images/cors3.jpg")} />
 
 ```notes
-Server adds the ACAO and ACAC headers if origin is allowed
+Server checks Origin header and adds ACAO header and if origin is allowed
+Server add ACAC if cookies are allowed to be forwarded
 ```
 
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/cors4.png")} />
+<img src={require("file-loader!./images/cors4.jpg")} />
 
 ```notes
 Browser forwards the request
@@ -695,30 +767,32 @@ Unfortunately..
 
 - Access-Control-Allow-Origin: http://example.com
 - Access-Control-Allow-Origin: \*
-- Access-Control-Allow-Origin: null
+- Access-Control-Allow-Origin: null 🙅‍♂️
 
 ```notes
-ACAO headers do not allow list, it is all or one or nothing
+ACAO headers do not allow list, it is one origin, all origin, or null
+
+Interestingly you think null means you dont trust any origin.
+
+But null origins are resources that use file:// schemes
 ```
 
 ---
 
 export default Layout;
 
-I also want credentials (cookies) sent
+Fortunately..
 
 - Access-Control-Allow-Origin: \*
 - Access-Control-Allow-Credentials: true
 
 ```notes
-ACAO headers do not allow list, it is all or one or nothing
+As someone who just wants to get this working
+
+You might want to allow multiple origins and send cookies throught
+
+Fortunately, this will result in an error
 ```
-
----
-
-export default LargeEmoji;
-
-❌
 
 ---
 
@@ -726,12 +800,34 @@ export default Layout;
 
 Misconfigured CORS example
 
-- Reflecting any Origins and respond in ACAO header
+- Reflect any origins in ACAO header
 - Attacker could obtain sensitive info eg API keys
 
 ```notes
-But why do server just reflect any origin back?
-ACAO headers do not allow for a list, it is all or one or nothing
+
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+app.use(
+  cors({
+    origin: (ctx) => 
+      // reflecting whatever origin header is supplied 🔥
+      return ctx.request.header.origin; 
+    credentials: true,
+  })
+);
+`}
+/>
+
+```notes
+Our server here is going to add ACAO headers based on what Origin header was supplied
 ```
 
 ---

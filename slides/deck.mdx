@@ -54,6 +54,18 @@ export default Split;
 
 export default Layout;
 
+Disclaimer
+
+```notes
+I am a new at this
+This is just scratching the surface
+Hope you might learn something new today
+```
+
+---
+
+export default Layout;
+
 Cookie
 
 XSS
@@ -120,7 +132,7 @@ Simpler times
 - No big impact of getting hacked
 
 ```notes
-Risk of website defacement
+The worst thing could be website defacement
 ```
 
 ---
@@ -177,6 +189,10 @@ export default Layout;
 
 <img src={require("file-loader!./images/cookie3.jpg")} />
 
+```notes
+So you entered a predetermined secret password
+```
+
 ---
 
 export default Layout;
@@ -188,8 +204,12 @@ Server validates password then gives a cookie
 
 Cookie is given so users dont need to log in every time
 
+The header Set-Cookie is used
+
 Cookie is a key-value pair supplied in the HTTP header
 Cookie value format is up to the programmer
+
+In this example is the key: SessionId and value: 1
 ```
 
 ---
@@ -199,7 +219,7 @@ export default Layout;
 <img src={require("file-loader!./images/momentslater.jpg")} />
 
 ```notes
-What if you go get a coffee now
+What if you close the browser and go get a coffee now?
 ```
 
 ---
@@ -211,6 +231,8 @@ export default Layout;
 ```notes
 You come back and send a request to /
 Browser automatically supplies the cookie
+
+note the cookie header
 ```
 
 ---
@@ -220,7 +242,7 @@ export default Layout;
 <img src={require("file-loader!./images/cookie6.jpg")} />
 
 ```notes
-Browser supplies your account details
+Browser supplies your account details as the cookie checks out
 ```
 
 ---
@@ -277,14 +299,16 @@ export default Layout;
 
 Web application uses user input without validation or encoding
 
+- Without encoding - `<script>`, browser run code inside
 - `<` can be encoded to `&lt;`
-- Without encoding, browser run `<script>` as scripts
-- With encoding, browser sees `&lt;script&gt;`
+- With encoding - `&lt;script&gt;`
 
 ```notes
-Type of injection,
-Malicious browser side scripts are injected into trusted websites.
-Flaws occur anywhere a web application uses input from a user without validating or encoding it.
+Browser side scripts are injected into websites.
+
+Occur any where a web application uses input from a user without validating or encoding it.
+
+Example payload attacker might inject is in between script tags.
 ```
 
 ---
@@ -299,6 +323,8 @@ http://vuln.hacker.com:2021/
 
 ```notes
 Lets see how we can use XSS to steal some cookies
+
+As you have seen before, cookies can be used to get into a user session without logging in
 
 1.2-cookie-exfil.ts
 
@@ -666,6 +692,8 @@ http://vuln.hacker.com:2021/
 2.1.r2-csrf-token.ts
 
 Cannot perform a transfer without a generated token on forms
+
+See invalid cookie response
 ```
 
 ---
@@ -824,7 +852,7 @@ Fortunately..
 ```notes
 As someone who just wants to get this working
 
-You might want to allow multiple origins and send cookies through
+You might want to allow every origins and send cookies through
 
 Fortunately, this will result in an error
 ```
@@ -839,7 +867,7 @@ Misconfigured CORS example
 - Attacker could obtain sensitive info eg API keys
 
 ```notes
-
+Developers might want to get around this * and true restriction by coding up the logic
 ```
 
 ---
@@ -948,6 +976,8 @@ Our server only returns ACAO for trusted origins
 export default Layout;
 
 Confusing Origin: null
+
+- Access-Control-Allow-Origin: null
 
 ```notes
 Another confusing aspect of CORS is the null origin

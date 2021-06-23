@@ -13,7 +13,7 @@ import { CodeSurfer } from "mdx-deck-code-surfer";
 import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 <Head>
-  <title>Web security 101: Cookies, CSRF, CORS, and XSS</title>
+  <title>Web security 101: Cookies, CSRF, and XSS</title>
 </Head>
 
 <BGImage src={require("file-loader!./images/sesamestreet2.jpg")} />
@@ -22,7 +22,7 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 # Today's letter is C
 
-## Cookies, CSRF, CORS, and XSS
+## Cookies - XSS - CSRF
 
 ### Web security 101
 
@@ -36,7 +36,7 @@ X in XSS stands for Cross
 
 export default Layout;
 
-My name is Raph
+## My name is Raph
 
 ---
 
@@ -44,17 +44,15 @@ export default Split;
 
 <img src={require("file-loader!./images/codeclub.jpg")} />
 
-- ~~Mechanical Engineer~~
-- ~~GRC Security~~
+- Mechanical Engineer
+- Security Analyst
 - Developer @ SEEK
-- Really like learning
-- Really like teaching
 
 ---
 
 export default Layout;
 
-Disclaimer
+# Disclaimer
 
 ```notes
 I am a new at this
@@ -66,19 +64,17 @@ Hope you might learn something new today
 
 export default Layout;
 
-Cookie
+# Cookie
 
-XSS
+# XSS
 
-CSRF
-
-CORS
+# CSRF
 
 ---
 
 export default Layout;
 
-What is a cookie?
+# What is a cookie?
 
 ```notes
 No I'm talking about HTTP cookies
@@ -118,35 +114,33 @@ Back in the old days
 
 ```notes
 Things were much simpler
-```
-
----
-
-export default Layout;
-
-Simpler times
-
 - Simple static web pages
 - No username/passwords
 - No need to keep track of who you are / states
-- No big impact of getting hacked
-
-```notes
-The worst thing could be website defacement
+- No big impact of getting hacked. The worst thing could be website defacement
 ```
 
 ---
 
 export default Layout;
 
-Now
+<img src={require("file-loader!./images/spacejam.jpg")} />
 
+```notes
+Spacejam website throwback
+```
+
+---
+
+export default Layout;
+
+# Now
+
+```notes
 - Complex web applications
 - We need to keep track of logged on users
 - Hide all the secrets
 - Stop all the unauthorised users
-
-```notes
 So how do we keep track of users?
 ```
 
@@ -291,7 +285,7 @@ Lets see the fix
 
 export default Layout;
 
-What is Cross Site Scripting (XSS)?
+# Cross Site Scripting (XSS)
 
 ---
 
@@ -502,7 +496,7 @@ What does sameSite mean?
 
 export default Layout;
 
-What is Cross Site Request Forgery (CSRF)?
+# Cross Site Request Forgery (CSRF)
 
 ---
 
@@ -741,277 +735,19 @@ And we do a check if token matches what was given
 
 export default Layout;
 
-What is Cross-Origin Resource Sharing (CORS)
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/cors-error.png")} />
-
-- Cross origin requests normally blocked by browser
-- CORS = Relaxation of the same origin policy
-- Could introduce CSRF vulns
-
-```notes
-Those who worked with frontend server talking to backend server would run into this
-
-The request normally blocked by the browser
-
-Setting up CORS will let browsers get passed this error
-
-origin: (domain, scheme, or port)
-```
-
----
-
-export default Layout;
-
-How does it work? - HTTP Headers
-
-- Access-Control-Allow-Origin
-- Access-Control-Allow-Credentials
-
-```notes
-Important HTTP headers
-
-ACAO
-ACAC
-```
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/cors1.jpg")} />
-
-```notes
-Access malicious site that redirects to fetch sensitive data that is in the server on the right
-```
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/cors2.jpg")} />
-
-```notes
-Browser adds Origin header as it is a cross origin request
-```
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/cors3.jpg")} />
-
-```notes
-Server checks Origin header and adds ACAO header and if origin is allowed
-Server add ACAC if cookies are allowed to be forwarded
-```
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/cors4.jpg")} />
-
-```notes
-Browser forwards the request
-(Would block if no ACAO header)
-(Would not send cookies if no ACAD header)
-```
-
----
-
-export default Layout;
-
-Unfortunately..
-
-- Access-Control-Allow-Origin: http://example.com
-- Access-Control-Allow-Origin: \*
-- Access-Control-Allow-Origin: null 🙅‍♂️
-
-```notes
-ACAO headers do not allow list, it is one origin, all origin, or null
-
-Interestingly you think null means you dont trust any origin.
-
-But null origins are resources that use file:// schemes
-```
-
----
-
-export default Layout;
-
-Fortunately..
-
-- Access-Control-Allow-Origin: \*
-- Access-Control-Allow-Credentials: true
-
-```notes
-As someone who just wants to get this working
-
-You might want to allow every origins and send cookies through
-
-Fortunately, this will result in an error
-```
-
----
-
-export default Layout;
-
-Misconfigured CORS example
-
-- Reflect any origins in ACAO header
-- Attacker could obtain sensitive info eg API keys
-
-```notes
-Developers might want to get around this * and true restriction by coding up the logic
-```
-
----
-
-export default LayoutNoFooter;
-
-<CodeSurfer
-  theme={nightOwl}
-  language="javascript"
-  code={`
-app.use(
-  cors({
-    origin: (ctx) => 
-      // reflecting whatever origin header is supplied 🔥
-      return ctx.request.header.origin; 
-    credentials: true,
-  })
-);
-`}
-/>
-
-```notes
-Our server here is going to add ACAO headers based on what Origin header was supplied
-
-This is bad
-```
-
----
-
-export default Layout;
-
-<img src={require("file-loader!./images/demogods2.png")} />
-
-Attack: CORS reflecting any request origin header
-
-http://vuln.hacker.com:2021/
-
-http://127.0.0.1:9000/malicious-cors.html
-
-```notes
-3.1-cors.ts
-
-The site currently only shows the balance of the logged in user
-The site could should API keys
-The server reflect origin as ACAO and forwards the page content
-```
-
----
-
-export default Layout;
-
 <img src={require("file-loader!./images/surprisedpikachu4.jpg")} />
 
-```notes
-Dont worry pikachu this isnt too bad
-```
-
 ---
 
 export default Layout;
 
-<img src={require("file-loader!./images/demogods2.png")} />
+## HTTP Cookie
 
-Defence: CORS only reflect ACAO on trusted sites
+## Cross Site Scripting (XSS)
 
-http://vuln.hacker.com:2021/
+## Cross Site Request Forgery (CSRF)
 
-http://127.0.0.1:9000/malicious-cors.html
-
-```notes
-3.1.r1-cors-acao.ts
-
-Show blocked by CORS error in browser
-```
-
----
-
-export default LayoutNoFooter;
-
-<CodeSurfer
-  theme={nightOwl}
-  language="javascript"
-  code={`
-app.use(
-  cors({
-    origin: (ctx) => {
-      const suppliedOrigin = ctx.request.header.origin;
-      const trustedSites = ["https://shipit.com", "https://trustedsite.com"];
-      if (trustedSites.includes(suppliedOrigin)) {
-        return suppliedOrigin; // Only allow trusted sites✨
-      }
-      return false;
-    },
-    credentials: true,
-  })
-);
-`}
-/>
-
-```notes
-Our server only returns ACAO for trusted origins
-```
-
----
-
-export default Layout;
-
-Confusing Origin: null
-
-- Access-Control-Allow-Origin: null
-
-```notes
-Another confusing aspect of CORS is the null origin
-When browser must send Origin header, it would be set to null
-eg. iframe
-```
-
----
-
-export default Layout;
-
-Defence against CORS misconfigurations
-
-- Only allow trusted sites
-  - Dynamically reflecting origins should be validated
-- Avoid allowing ACAO: null
-
-```notes
-
-```
-
----
-
-export default Layout;
-
-## Summary
-
-HTTP Cookie
-
-Cross Site Scripting (XSS)
-
-Cross Site Request Forgery (CSRF)
-
-Cross-Origin Resource Sharing (CORS)
+<!-- Cross-Origin Resource Sharing (CORS) -->
 
 ```notes
 Good cookies headers like httpOnly, secure, and sameSite
@@ -1030,7 +766,7 @@ export default Layout;
 
 #### PortSwigger Web Security Academy: https://portswigger.net/web-security
 
-#### Exploiting CORS Misconfigurations - James Kettle: https://youtu.be/wgkj4ZgxI4c
+<!-- #### Exploiting CORS Misconfigurations - James Kettle: https://youtu.be/wgkj4ZgxI4c -->
 
 #### https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 

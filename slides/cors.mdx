@@ -1,0 +1,261 @@
+export default Layout;
+
+What is Cross-Origin Resource Sharing (CORS)
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors-error.png")} />
+
+- Cross origin requests normally blocked by browser
+- CORS = Relaxation of the same origin policy
+- Could introduce CSRF vulns
+
+```notes
+Those who worked with frontend server talking to backend server would run into this
+
+The request normally blocked by the browser
+
+Setting up CORS will let browsers get passed this error
+
+origin: (domain, scheme, or port)
+```
+
+---
+
+export default Layout;
+
+How does it work? - HTTP Headers
+
+- Access-Control-Allow-Origin
+- Access-Control-Allow-Credentials
+
+```notes
+Important HTTP headers
+
+ACAO
+ACAC
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors1.jpg")} />
+
+```notes
+Access malicious site that redirects to fetch sensitive data that is in the server on the right
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors2.jpg")} />
+
+```notes
+Browser adds Origin header as it is a cross origin request
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors3.jpg")} />
+
+```notes
+Server checks Origin header and adds ACAO header and if origin is allowed
+Server add ACAC if cookies are allowed to be forwarded
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/cors4.jpg")} />
+
+```notes
+Browser forwards the request
+(Would block if no ACAO header)
+(Would not send cookies if no ACAD header)
+```
+
+---
+
+export default Layout;
+
+Unfortunately..
+
+- Access-Control-Allow-Origin: http://example.com
+- Access-Control-Allow-Origin: \*
+- Access-Control-Allow-Origin: null 🙅‍♂️
+
+```notes
+ACAO headers do not allow list, it is one origin, all origin, or null
+
+Interestingly you think null means you dont trust any origin.
+
+But null origins are resources that use file:// schemes
+```
+
+---
+
+export default Layout;
+
+Fortunately..
+
+- Access-Control-Allow-Origin: \*
+- Access-Control-Allow-Credentials: true
+
+```notes
+As someone who just wants to get this working
+
+You might want to allow every origins and send cookies through
+
+Fortunately, this will result in an error
+```
+
+---
+
+export default Layout;
+
+Misconfigured CORS example
+
+- Reflect any origins in ACAO header
+- Attacker could obtain sensitive info eg API keys
+
+```notes
+Developers might want to get around this * and true restriction by coding up the logic
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+app.use(
+  cors({
+    origin: (ctx) => 
+      // reflecting whatever origin header is supplied 🔥
+      return ctx.request.header.origin; 
+    credentials: true,
+  })
+);
+`}
+/>
+
+```notes
+Our server here is going to add ACAO headers based on what Origin header was supplied
+
+This is bad
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Attack: CORS reflecting any request origin header
+
+http://vuln.hacker.com:2021/
+
+http://127.0.0.1:9000/malicious-cors.html
+
+```notes
+3.1-cors.ts
+
+The site currently only shows the balance of the logged in user
+The site could should API keys
+The server reflect origin as ACAO and forwards the page content
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/surprisedpikachu4.jpg")} />
+
+```notes
+Dont worry pikachu this isnt too bad
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/demogods2.png")} />
+
+Defence: CORS only reflect ACAO on trusted sites
+
+http://vuln.hacker.com:2021/
+
+http://127.0.0.1:9000/malicious-cors.html
+
+```notes
+3.1.r1-cors-acao.ts
+
+Show blocked by CORS error in browser
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+app.use(
+  cors({
+    origin: (ctx) => {
+      const suppliedOrigin = ctx.request.header.origin;
+      const trustedSites = ["https://shipit.com", "https://trustedsite.com"];
+      if (trustedSites.includes(suppliedOrigin)) {
+        return suppliedOrigin; // Only allow trusted sites✨
+      }
+      return false;
+    },
+    credentials: true,
+  })
+);
+`}
+/>
+
+```notes
+Our server only returns ACAO for trusted origins
+```
+
+---
+
+export default Layout;
+
+Confusing Origin: null
+
+- Access-Control-Allow-Origin: null
+
+```notes
+Another confusing aspect of CORS is the null origin
+When browser must send Origin header, it would be set to null
+eg. iframe
+```
+
+---
+
+export default Layout;
+
+Defence against CORS misconfigurations
+
+- Only allow trusted sites
+  - Dynamically reflecting origins should be validated
+- Avoid allowing ACAO: null
+
+```notes
+
+```
+
+---

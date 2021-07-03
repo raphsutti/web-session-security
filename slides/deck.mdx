@@ -510,7 +510,7 @@ export default Layout;
 
 export default Layout;
 
-Cause user to execute unwanted actions while they are currently authenticated
+Causes user to execute unwanted actions while they are currently authenticated
 
 - Eg. Transferring funds, changing email address
 
@@ -584,6 +584,10 @@ Wow.
 export default Layout;
 
 <img src={require("file-loader!./images/gru.png")} />
+
+```notes
+So what happened?
+```
 
 ---
 
@@ -773,7 +777,34 @@ ctx.cookies.set("sessionId", nextSessionId, {
 ```notes
 From previous examples, we went ahead and manually set these cookie properties
 
-What if we leave them out? What is the default?
+What if we leave them out? It makes me think.. what is the default?
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+ctx.cookies.set("sessionId", nextSessionId);
+`}
+/>
+
+```notes
+`koa-cookie` does not enable `sameSite` cookie by default
+But httpOnly is set to true!
+```
+
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/anakin.png")} />
+
+```notes
+Library and frameworks are great.. But we should know what they do to some extent
 ```
 
 ---
@@ -787,7 +818,7 @@ Look at recommendations (eg. OWASP)
 Using a framework? Check what it is doing
 
 ```notes
-`koa-cookie` does not enable `sameSite` cookie by default
+So what should we do?
 ```
 
 ---
@@ -830,6 +861,10 @@ export default Layout;
 We are just scratching the surface!
 
 If you are interested to a more deep dive here are some videos and labs
+
+CS253 are video lectures that cover various web security topics
+
+PortSwigger labs are great if you want to get hands on
 ```
 
 ---

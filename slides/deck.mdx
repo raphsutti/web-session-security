@@ -24,8 +24,6 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 ## Cookies - XSS - CSRF
 
-### Web security 101
-
 </Frontpage>
 
 ```notes
@@ -738,6 +736,24 @@ export default Layout;
 
 <img src={require("file-loader!./images/surprisedpikachu4.jpg")} />
 
+```notes
+So what are some tips?
+```
+
+---
+
+export default Layout;
+
+Know the basics, read the docs
+
+Look at recommendations (eg. OWASP)
+
+Using a framework? Check what it is doing
+
+```notes
+`koa-cookie` does not enable `sameSite` cookie by default
+```
+
 ---
 
 export default Layout;
@@ -751,9 +767,10 @@ export default Layout;
 <!-- Cross-Origin Resource Sharing (CORS) -->
 
 ```notes
+Cookies used to track user sessions
 Good cookies headers like httpOnly, secure, and sameSite
-XSS is scary, sanitise/validate your input
-CSRF is performs action on behalf of users using cookies
+XSS is scary, can cause cookie exfil. Sanitise/validate your input
+CSRF is when an action is performed on behalf of users using cookies
 CORS misconfiguration can lead to CSRF
 ```
 
@@ -769,7 +786,7 @@ export default Layout;
 
 <!-- #### Exploiting CORS Misconfigurations - James Kettle: https://youtu.be/wgkj4ZgxI4c -->
 
-#### https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+#### [OWASP CSRF Cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
 
 ```notes
 We are just scratching the surface!

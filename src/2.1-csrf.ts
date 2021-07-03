@@ -90,7 +90,7 @@ router.post("/transfer", (ctx) => {
   const username = SESSIONS[sessionId];
 
   if (!sessionId || !username) {
-    ctx.body = "Invalid cookie";
+    return (ctx.body = "Invalid cookie");
   }
   const body: Record<string, string> = ctx.request?.body;
   if (!body) {

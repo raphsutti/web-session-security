@@ -832,11 +832,17 @@ export default Layout;
 ## Cross Site Request Forgery (CSRF)
 
 ```notes
-Cookies used to track user sessions
+What did we learn today?
+
+Like the example where you are shopping online,
+Cookies are used to track user sessions
 Good cookies headers like httpOnly, secure, and sameSite
 
-Attack method 1: XSS can cause cookie exfil. Sanitise/validate your input
-Attack method 2: CSRF is when an action is performed on behalf of users using cookies
+Attack method 1: XSS can cause cookie exfil and hence steal your session without a password.
+Defend against this with Sanitise/validate your input
+
+Attack method 2: CSRF is when an action is performed on behalf of users using cookies by visiting malicious link
+Defend against this with sameSite property and (anti) csrf token
 ```
 
 ---

@@ -68,6 +68,11 @@ export default Layout;
 
 # CSRF
 
+```notes
+I'm going to talk about these topic
+So what does these three things have to do with each other?
+```
+
 ---
 
 export default Layout;
@@ -125,7 +130,7 @@ export default Layout;
 <img src={require("file-loader!./images/spacejam.jpg")} />
 
 ```notes
-Spacejam website throwback
+Look at this master piece from the 90's
 ```
 
 ---
@@ -161,6 +166,7 @@ export default Layout;
 <img src={require("file-loader!./images/cookie1.jpg")} />
 
 ```notes
+Users access webpages using browsers
 Browser on the left and server on the right
 ```
 
@@ -260,7 +266,7 @@ export default Layout;
 <img src={require("file-loader!./images/surprisedpikachu1.jpg")} />
 
 ```notes
-Dont worry pikachu we have fix
+Wow.
 ```
 
 ---
@@ -328,6 +334,10 @@ No need for password. Password complexity out the window
 export default Layout;
 
 <img src={require("file-loader!./images/surprisedpikachu2.jpg")} />
+
+```notes
+Wow.
+```
 
 ---
 
@@ -447,7 +457,7 @@ ctx.cookies.set("sessionId", nextSessionId, {
 />
 
 ```notes
-httpOnly - cookie accesible via javascript
+httpOnly - cookie not accesible via javascript
 
 Great, so which method should we use?
 
@@ -565,6 +575,10 @@ export default Layout;
 
 <img src={require("file-loader!./images/surprisedpikachu3.jpg")} />
 
+```notes
+Wow.
+```
+
 ---
 
 export default Layout;
@@ -666,7 +680,7 @@ ctx.cookies.set("sessionId", nextSessionId, {
 />
 
 ```notes
-httpOnly - cookie accesible via javascript
+httpOnly - cookie not accesible via javascript
 secure - HTTPS
 sameSite - cookie sending depending on sites
 ```
@@ -737,7 +751,29 @@ export default Layout;
 <img src={require("file-loader!./images/surprisedpikachu4.jpg")} />
 
 ```notes
-So what are some tips?
+Wow.
+```
+
+---
+
+export default LayoutNoFooter;
+
+<CodeSurfer
+  theme={nightOwl}
+  language="javascript"
+  code={`
+ctx.cookies.set("sessionId", nextSessionId, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "lax",
+});
+`}
+/>
+
+```notes
+From previous examples, we went ahead and manually set these cookie properties
+
+What if we leave them out? What is the default?
 ```
 
 ---
@@ -769,8 +805,10 @@ export default Layout;
 ```notes
 Cookies used to track user sessions
 Good cookies headers like httpOnly, secure, and sameSite
-XSS is scary, can cause cookie exfil. Sanitise/validate your input
-CSRF is when an action is performed on behalf of users using cookies
+
+Attack method 1: XSS can cause cookie exfil. Sanitise/validate your input
+Attack method 2: CSRF is when an action is performed on behalf of users using cookies
+
 CORS misconfiguration can lead to CSRF
 ```
 

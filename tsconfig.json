@@ -63,5 +63,5 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": ["src/**/*", "misc/3.1-cors.ts"]
+  "include": ["src/**/*", "old/3.1-cors.ts"]
 }

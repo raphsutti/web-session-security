@@ -30,7 +30,9 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 
 ```notes
 X in XSS stands for Cross
+
 Link to the slide: https://relaxed-cray-51aa45.netlify.app/#0
+
 Link to GitHub: https://github.com/raphsutti/web-session-security
 ```
 
@@ -71,8 +73,7 @@ export default Layout;
 # CSRF
 
 ```notes
-I'm going to talk about these topic
-So what does these three things have to do with each other?
+I'm going to talk about these topics in regards to web session security
 ```
 
 ---
@@ -811,8 +812,14 @@ ctx.cookies.set("sessionId", nextSessionId);
 `}
 />
 
+---
+
+export default Layout;
+
+<img src={require("file-loader!./images/koa-defaults.png")} />
+
 ```notes
-`koa-cookie` does not enable `sameSite` cookie by default
+koa does not enable `sameSite` cookie by default
 But httpOnly is set to true!
 ```
 
@@ -870,9 +877,9 @@ export default Layout;
 
 ## Goodies
 
-#### CS253: https://web.stanford.edu/class/cs253/
+#### [CS253 Web Security](https://web.stanford.edu/class/cs253/)
 
-#### PortSwigger Web Security Academy: https://portswigger.net/web-security
+#### [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 
 #### [OWASP CSRF Cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
 

@@ -29,11 +29,11 @@ import nightOwl from "prism-react-renderer/themes/nightOwl";
 </Frontpage>
 
 ```notes
+
 X in XSS stands for Cross
 
 Link to the slide: https://relaxed-cray-51aa45.netlify.app/#0
 
-Link to GitHub: https://github.com/raphsutti/web-session-security
 ```
 
 ---
@@ -312,6 +312,8 @@ Browser side scripts are injected into websites.
 Occur any where a web application uses input from a user without validating or encoding it.
 
 Example payload attacker might inject is in between script tags.
+
+Browser will see code in between script tags and run it!
 ```
 
 ---
@@ -770,12 +772,6 @@ And we do a check if token matches what was given
 
 export default Layout;
 
-<img src={require("file-loader!./images/goat.gif")} />
-
----
-
-export default Layout;
-
 What if we stick to the defaults?
 
 ---
@@ -865,7 +861,7 @@ Cookies are used to track user sessions
 Good cookies headers like httpOnly, secure, and sameSite
 
 Attack method 1: XSS can cause cookie exfil and hence steal your session without a password.
-Defend against this with Sanitise/validate your input
+Defend against this with Sanitise/validate your input, and httpOnly cookie
 
 Attack method 2: CSRF is when an action is performed on behalf of users using cookies by visiting malicious link
 Defend against this with sameSite property and (anti) csrf token
@@ -882,6 +878,8 @@ export default Layout;
 #### [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 
 #### [OWASP CSRF Cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
+
+#### [GitHub repo](https://github.com/raphsutti/web-session-security)
 
 ```notes
 We are just scratching the surface!
